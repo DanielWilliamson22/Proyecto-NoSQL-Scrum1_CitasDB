@@ -1,0 +1,63 @@
+:root {
+    --color-principal: #21AEC4;
+    --color-secundario: #215DC4;
+    --color-accion: #C4215D;
+    --color-advertencia: #C48821;
+    --color-fondo: #f4f7f6;
+}
+
+body {
+    background-color: var(--color-fondo);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Navbar */
+.navbar-custom {
+    background-color: var(--color-principal);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.navbar-brand {
+    color: white !important;
+    font-weight: 700;
+}
+
+/* Botón Principal */
+.btn-primary-custom {
+    background-color: var(--color-principal);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+.btn-primary-custom:hover {
+    background-color: var(--color-secundario);
+    color: white;
+}
+
+/* Botones de Acción */
+.btn-edit {
+    color: var(--color-advertencia);
+    background-color: rgba(196, 136, 33, 0.1);
+    border: none;
+}
+.btn-edit:hover {
+    background-color: var(--color-advertencia);
+    color: white;
+}
+
+.btn-delete {
+    color: var(--color-accion);
+    background-color: rgba(196, 33, 93, 0.1);
+    border: none;
+}
+.btn-delete:hover {
+    background-color: var(--color-accion);
+    color: white;
+}
+
+/* Badge */
+.badge-ciudad {
+    background-color: var(--color-secundario);
+    font-weight: 500;
+    padding: 0.5em 0.8em;
+    border-radius: 30px;
+}

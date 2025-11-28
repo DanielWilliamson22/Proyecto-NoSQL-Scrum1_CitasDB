@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "citas-db-collection-id",
+		"name": "Proyecto CitasDB API",
+		"description": "Colección para probar el CRUD de Sedes del proyecto de agendamiento.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Crear Sede (Guarda ID Auto)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Script para guardar el ID automáticamente tras crear",
+							"var jsonData = pm.response.json();",
+							"if (jsonData._id) {",
+							"    pm.environment.set(\"sede_id\", jsonData._id);",
+							"    console.log(\"ID de sede guardado: \" + jsonData._id);",
+							"}",
+							"",
+							"pm.test(\"Estado es 201 Created\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Sede Chapinero\",\n    \"direccion\": \"Cra 13 # 60-12\",\n    \"ciudad\": \"Bogotá\",\n    \"telefono\": \"3101234567\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/sedes",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sedes"
+					]
+				},
+				"description": "Crea una nueva sede. \n**Nota:** Al ejecutarse con éxito, guarda automáticamente el `_id` en la variable de entorno `sede_id` para usarla en las otras peticiones."
+			},
+			"response": []
+		},
+		{
+			"name": "2. Obtener Todas las Sedes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/sedes",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sedes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Obtener Sede por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/sedes/{{sede_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sedes",
+						"{{sede_id}}"
+					]
+				},
+				"description": "Usa la variable `{{sede_id}}`. Si no has creado una sede primero, reemplaza la variable en la URL por un ID real de tu base de datos."
+			},
+			"response": []
+		},
+		{
+			"name": "4. Actualizar Sede",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Sede Chapinero Norte (Actualizada)\",\n    \"telefono\": \"6017654321\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/sedes/{{sede_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sedes",
+						"{{sede_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Eliminar Sede",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/sedes/{{sede_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sedes",
+						"{{sede_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:4000/api",
+			"type": "string"
+		},
+		{
+			"key": "sede_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

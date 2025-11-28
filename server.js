@@ -1,25 +1,27 @@
-require('dotenv').config(); // Cargar variables de entorno
+require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
+const connectDB = require('./src/config/db'); // <-- Importamos tu nueva config
+const sedeRoutes = require('./src/routes/sedeRoutes');
 
 const app = express();
 
-// Middlewares (Para que el servidor entienda JSON)
+// 1. Conectar a MongoDB (Usando el archivo limpio)
+connectDB();
+
+// 2. Middlewares
 app.use(express.json());
 app.use(cors());
+app.use(express.static('public'));
 
-// Conexión a MongoDB
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('🔥 Conectado a MongoDB: citasDB'))
-    .catch((err) => console.error('❌ Error conectando a Mongo:', err));
-
-// Ruta de prueba (para ver si funciona en el navegador)
+// 3. Rutas
 app.get('/', (req, res) => {
     res.send('API de Citas funcionando correctamente 🚀');
 });
 
-// Arrancar el servidor
+app.use('/api/sedes', sedeRoutes);
+
+// 4. Arrancar servidor
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
